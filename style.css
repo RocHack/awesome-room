@@ -1,0 +1,122 @@
+body {
+    margin: 1em;
+}
+
+#logo {
+    float: right;
+    width: 6em;
+    margin-top: 1em;
+}
+.hide-irc #logo {
+    width: 3em;
+}
+
+#chat-sidebar {
+    position: absolute;
+    right: 1em;
+    bottom: 0;
+    top: 0;
+    width: 20%;
+}
+.hide-irc #chat-sidebar {
+    width: 0;
+}
+
+#chat-sidebar h3 {
+    position: absolute;
+    top: 2.5em;
+    z-index: 6;
+    left: 0em;
+}
+.hide-irc #chat-sidebar h3 {
+    left: -1.25em;
+}
+
+.hide-irc h3 :link:last-child {
+    display: none;
+}
+
+#chat-sidebar h3 :link:first-child {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 1em;
+    padding: 0 .25em;
+}
+
+#chat-sidebar h4 {
+    position: absolute;
+    width: 100%;
+    top: 1.75em;
+    right: 0em;
+    font-size: 1.4em;
+    z-index: 5;
+    overflow: hidden;
+}
+.hide-irc h4 {
+    opacity: 0;
+}
+
+#chat-clip {
+    position: absolute;
+    overflow: hidden;
+    width: 100%;
+    bottom: 0;
+    top: 8em;
+    border-top: 1px solid #d6dEeB;
+}
+
+#chat-messages {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    margin-bottom: .25em;
+}
+.hide-irc #chat-messages {
+    opacity: 0;
+}
+
+article {
+    width: 78%;
+}
+.hide-irc article {
+    width: 100%;
+}
+
+article, #chat-sidebar, #logo, h3, h4,
+#chat-messages, #localVideo, #remotes, #remotes * {
+    -webkit-transition-property: width, left, right, margin, opacity;
+    -webkit-transition-duration: 500ms;
+            transition-property: width, left, right, margin, opacity;
+            transition-duration: 500ms;
+}
+
+/*
+#localVideo {
+    height: 11em;
+    float: right;
+    margin-bottom: 1em;
+}
+.hide-irc #localVideo {
+    margin-right: 4em;
+}
+*/
+
+#remotes {
+    position: absolute;
+    bottom: .5em;
+    top: 5.2em;
+    left: 1em;
+    right: 23%;
+    text-align: center;
+    /*
+    background-color: #FFF9B3;
+     */
+}
+.hide-irc #remotes {
+    right: 1em;
+}
+
+#remotes * {
+    width: 33.33%;
+    float: left;
+    margin: 0;
+}
