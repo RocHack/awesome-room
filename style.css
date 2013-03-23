@@ -2,13 +2,26 @@ body {
     margin: 1em;
 }
 
+h1 {
+    position: absolute;
+    top: .25em;
+    padding: 0 0.25em;
+    z-index: 10;
+    opacity: .75;
+    background: rgba(255, 255, 255, 0.5);
+}
+
 #logo {
     float: right;
     width: 6em;
     margin-top: 1em;
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
 }
 .hide-irc #logo {
     width: 3em;
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
 }
 
 #chat-sidebar {
@@ -83,9 +96,9 @@ article {
 
 article, #chat-sidebar, #logo, h3, h4,
 #chat-messages, #localVideo, #remotes, #remotes * {
-    -webkit-transition-property: width, left, right, margin, opacity;
+    -webkit-transition-property: width, left, right, margin, opacity, transform;
+            transition-property: width, left, right, margin, opacity, transform;
     -webkit-transition-duration: 500ms;
-            transition-property: width, left, right, margin, opacity;
             transition-duration: 500ms;
 }
 
@@ -103,7 +116,7 @@ article, #chat-sidebar, #logo, h3, h4,
 #remotes {
     position: absolute;
     bottom: .5em;
-    top: 5.2em;
+    top: 1em;
     left: 1em;
     right: 23%;
     text-align: center;
