@@ -60,7 +60,7 @@ var remoteVideosEl = document.getElementById('remotes');
 
 // create our webrtc connection
 var webrtc = new WebRTC({
-    localVideoEl: 'localVideo',
+    localVideoEl: localVideoEl,
     remoteVideosEl: remoteVideosEl,
     // immediately ask for camera access
     autoRequestMedia: true,
@@ -106,14 +106,14 @@ function fitVideos(container, videos) {
         width = containerWidth/cols;
         height = width * aspect;
         var totalHeight = rows * height;
-        if (totalHeight < containerHeight) {
+        if (totalHeight <= containerHeight) {
             w = 1/cols;
             if (w > bestFit) bestFit = w;
         }
         height = containerHeight/rows;
         width = height / aspect;
         var totalWidth = cols * width;
-        if (totalWidth < containerWidth) {
+        if (totalWidth <= containerWidth) {
             w = width/containerWidth;
             if (w > bestFit) bestFit = w;
         }
@@ -123,7 +123,7 @@ function fitVideos(container, videos) {
 
 // Update the size of the videos dynamically
 function updateVideoSizes() {
-    var videos = [].slice.call(remotes.getElementsByTagName("*"));
+    var videos = [].slice.call(remoteVideosEl.getElementsByTagName("*"));
     var width = fitVideos(remoteVideosEl, videos) + "px";
     videos.forEach(function (video) {
         video.style.width = width;
@@ -133,5 +133,6 @@ function updateVideoSizes() {
 updateVideoSizes();
 webrtc.on('videoAdded', updateVideoSizes);
 webrtc.on('videoRemoved', updateVideoSizes);
+webrtc.on('readyToCall', updateVideoSizes);
 window.addEventListener('resize', updateVideoSizes, false);
 
