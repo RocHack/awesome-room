@@ -1,31 +1,56 @@
-// Get IRC updates from the couch
-Couch.urlPrefix = '/couch';
-var db = Couch.db('rochackircmarkov');
-db.changes(null, {
-    include_docs: true
-}).onChange(function (resp) {
-    if (resp.results) resp.results.forEach(addChatRow);
-});
-
-// Get latest IRC messages
-db.view('couchgrams/all', {
-    descending: true,
-    limit: 15,
-    include_docs: true,
-    error: function () {},
-    success: function (resp) {
-        if (resp && resp.rows) resp.rows.reverse().forEach(addChatRow);
-    }
-});
-
 var chatList = document.getElementById("chat-messages");
+
+if (chatList) {
+    // Get IRC updates from the couch
+    Couch.urlPrefix = '/couch';
+    var db = Couch.db('rochackircmarkov');
+    db.changes(null, {
+        include_docs: true,
+        filter: 'couchgrams/text'
+    }).onChange(function (resp) {
+        if (resp.results) resp.results.forEach(addChatRow);
+    });
+
+    // Get latest IRC messages
+    db.view('couchgrams/text', {
+        descending: true,
+        limit: 25,
+        include_docs: true,
+        error: function () {},
+        success: function (resp) {
+            if (resp && resp.rows) resp.rows.reverse().forEach(addChatRow);
+        }
+    });
+}
+
+var urlRegex = /[a-z]{2,}:\/\/*[^ ]*(?= |$)/g;
 
 function addChatRow(row) {
     var date = new Date(row.id * 1000);
     var text = row.doc.text;
+    var sender = row.doc.sender;
     // Insert chat message
     var li = document.createElement("li");
-    li.appendChild(document.createTextNode(text));
+    if (sender) li.appendChild(document.createTextNode('<' + sender + '> '));
+
+    // Turn URLs into links.
+    var urls = [];
+    var match;
+    while (match = urlRegex.exec(text)) {
+        urls.push(match[0]);
+    }
+    text.split(urlRegex).forEach(function (text) {
+        // Write text segment
+        li.appendChild(document.createTextNode(text));
+        // Write link
+        if (urls.length == 0) return;
+        var url = urls.pop();
+        var link = document.createElement("a");
+        link.setAttribute("href", url);
+        link.appendChild(document.createTextNode(url));
+        li.appendChild(link);
+    });
+
     li.title = date.toLocaleString();
     chatList.appendChild(li);
 }
