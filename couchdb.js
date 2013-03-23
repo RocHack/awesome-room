@@ -419,7 +419,11 @@ var Couch = (function() {
             db.info({
               success: function(info) {
                 since = info.update_seq;
-                getChangesSince();
+                if (since == null) {
+                    this.error();
+                } else {
+                    getChangesSince();
+                }
               },
               error: function() {
                 timeout *= 2;
