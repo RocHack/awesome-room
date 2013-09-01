@@ -32,6 +32,14 @@ function addChatRow(row) {
     // Insert chat message
     var li = document.createElement("li");
     if (sender) li.appendChild(document.createTextNode('<' + sender + '> '));
+    /*
+    if (sender) {
+        var b = document.createElement("strong");
+        b.appendChild(document.createTextNode(sender));
+        li.appendChild(b);
+        li.appendChild(document.createTextNode(" "));
+    }
+    */
 
     // Turn URLs into links.
     var urls = [];
