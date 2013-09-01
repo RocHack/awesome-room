@@ -268,6 +268,10 @@ function WebRTC(opts) {
         }
     });
 
+    connection.on('broadcast', function (payload) {
+        self.emit('broadcast', payload);
+    });
+
     connection.on('joined', function (room) {
         logger.log('got a joined', room);
         if (!self.pcs[room.id]) {
@@ -383,6 +387,10 @@ WebRTC.prototype.send = function (to, type, payload) {
         type: type,
         payload: payload
     });
+};
+
+WebRTC.prototype.broadcast = function (payload) {
+    this.connection.emit('broadcast', payload);
 };
 
 
