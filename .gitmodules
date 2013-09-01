@@ -1,0 +1,3 @@
+[submodule "signalmaster"]
+	path = signalmaster
+	url = https://github.com/clehner/signalmaster.git
