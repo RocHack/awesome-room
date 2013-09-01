@@ -72,6 +72,17 @@ var webrtc = new WebRTC({
     remoteVideosEl: remoteVideosEl,
     // immediately ask for camera access
     autoRequestMedia: true,
+    peerConnectionConfig: {
+        iceServers: navigator.mozGetUserMedia ?
+            [{"url":"stun:124.124.124.2"}] :
+            [{"url": "stun:stun.l.google.com:19302"}],
+        onChannelOpened: function (channel) {
+            console.log('channel opened', channel);
+        },
+        onChannelMessage: function (event) {
+            console.log('channel message', event.data);
+        }
+    },
     log: false
 });
 
